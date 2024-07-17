@@ -6,7 +6,7 @@ export class House{
         this.sqft = houseData.sqft
         this.price = houseData.price
         this.description = houseData.description
-        this.imgURL = houseData.imgURL
+        this.imgURL = houseData.imgUrl
         this.id = houseData.id || houseData._id
     }
 }

@@ -18,6 +18,7 @@ async function getHouses() {
 
 <template>
     <div v-for="house in houses" :key="house.id">
+        <p>{{ house.imgURL }}</p>
         <img :src="house.imgURL" alt="House Picture">
         <p>
             {{house.description}}
