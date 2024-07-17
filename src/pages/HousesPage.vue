@@ -3,9 +3,9 @@ import { computed, onMounted } from 'vue';
 import { housesService } from '../services/HousesService.js';
 import { AppState } from '../AppState.js';
 
-onMounted(()=>getHouses())
+onMounted(() => getHouses())
 
-let houses = computed(()=>AppState.houses)
+let houses = computed(() => AppState.houses)
 
 
 async function getHouses() {
@@ -17,17 +17,19 @@ async function getHouses() {
 
 
 <template>
-    <div v-for="house in houses" :key="house.id">
-        <p>{{ house.imgURL }}</p>
-        <img :src="house.imgURL" alt="House Picture">
-        <p>
-            {{house.description}}
-        </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Houses</h1>
+            </div>
+        </div>
+        <div v-for="house in houses" :key="house.id">
+            <HouseCard :houseProp="house" />
+        </div>
     </div>
-    Houses 😎
+
+
 </template>
 
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
