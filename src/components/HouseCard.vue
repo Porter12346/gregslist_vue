@@ -1,10 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { House } from '../models/House.js';
+import { AppState } from '../AppState.js';
+import { api } from '../services/AxiosService.js';
+import Pop from '../utils/Pop.js';
+import { housesService } from '../services/HousesService.js';
 
 defineProps({ houseProp: { type: House } })
 
+const account = computed(()=>AppState.account)
+
 let showImage = ref(true)
+
+async function destroyHouse(id){
+    try {
+        await housesService.destroyHouse(id)
+    } catch (error) {
+        Pop.error(error)
+    }
+}
 </script>
 
 
@@ -19,14 +33,19 @@ let showImage = ref(true)
                 </h4>
                 <h5>$ {{ houseProp.price }}</h5>
                 <h5>{{ houseProp.levels }} story home</h5>
+                <p>{{ houseProp.description }}</p>
 
             </div>
-            <div class="d-flex justify-content-end align-items-center m-2">
+            <div class="d-flex justify-content-between align-items-center m-2">
+                <button v-if="houseProp?.creator._id == account?.id" @click="destroyHouse(houseProp.id)" class="btn btn-danger"><i class="mdi mdi-close-octagon"></i></button>
+                <div v-else></div>
+                <div class="d-flex">
                 <h3 class="m-3">
                     {{ houseProp.creator.name }}
                 </h3>
                 <img :src="houseProp.creator.picture" alt="Profile Picture" class="img-fluid profile-pic">
             </div>
+        </div>
         </div>
     </div>
 </template>
